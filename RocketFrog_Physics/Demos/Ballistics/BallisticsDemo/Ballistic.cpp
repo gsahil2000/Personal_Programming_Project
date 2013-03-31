@@ -4,6 +4,7 @@
 
 namespace RocketFrog
 {
+	/// Main uses this to get handle to this class to make a demo.
 	Application* GetApplication()
 	{
 		return new BallisticDemo();
@@ -136,11 +137,11 @@ namespace RocketFrog
 		// Draw some scale lines
 		glColor3f(0.75f, 0.75f, 0.75f);
 		glBegin(GL_LINES);
-		for (unsigned i = 0; i < 200; i += 10)
-		{
-			glVertex3f(-5.0f, 0.0f, i);
-			glVertex3f(5.0f, 0.0f, i);
-		}
+			for (unsigned i = 0; i < 200; i += 10)
+			{
+				glVertex3f(-5.0f, 0.0f, i);
+				glVertex3f(5.0f, 0.0f, i);
+			}
 		glEnd();
 
 		// Render each particle in turn
@@ -220,12 +221,35 @@ namespace RocketFrog
 	{
 		Vector3 _pos = m_particle.GetPosition();
 
-		glColor3f(0, 0, 0);
+		/// render the bullet sphere itself.
+		switch (m_shotType)
+		{
+		case RocketFrog::BallisticDemo::NONE:
+			break;
+		case RocketFrog::BallisticDemo::PISTOL:
+			glColor3f(0, 0, 0);
+			break;
+		case RocketFrog::BallisticDemo::ARTILLERY:
+			glColor3f(1, 0, 0);
+			break;
+		case RocketFrog::BallisticDemo::FIREBALL:
+			glColor3f(1, 1, 0);
+			break;
+		case RocketFrog::BallisticDemo::LASER:
+			glColor3f(1, 0, 1);
+			break;
+		case RocketFrog::BallisticDemo::END:
+			break;
+		default:
+			break;
+		}
+		
 		glPushMatrix();
 		glTranslatef(_pos.x, _pos.y, _pos.z);
 		glutSolidSphere(0.3f, 5, 4);
 		glPopMatrix();
 
+		/// shadow effect by drawing a grey circle.
 		glColor3f(0.75, 0.75, 0.75);
 		glPushMatrix();
 		glTranslatef(_pos.x, 0, _pos.z);

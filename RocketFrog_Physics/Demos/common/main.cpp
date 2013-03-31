@@ -5,16 +5,14 @@
 
 using namespace RocketFrog;
 
-//extern Application* GetApplication();
-
 Application* g_app;
 
-void createWindow(const char* a_title)
+void createWindow()
 {
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(640, 320);
+	glutInitWindowSize(1200, 600);
 	glutInitWindowPosition(0, 0);
-	g_app->m_windowID = glutCreateWindow(a_title);
+	g_app->m_windowID = glutCreateWindow(g_app->GetTitle());
 }
 
 void update()
@@ -57,8 +55,9 @@ void main(int argc, char** argv)
 	Timer::Init();
 
 	g_app = GetApplication();
-	createWindow(g_app->GetTitle());
+	createWindow();
 
+	/// register callback functions.
 	glutReshapeFunc(reshape);
 	glutKeyboardFunc(keyboard);
 	glutDisplayFunc(display);
