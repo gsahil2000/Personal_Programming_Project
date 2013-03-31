@@ -6,6 +6,10 @@ namespace RocketFrog
 		:x(0), y(0), z(0), padding(0)
 	{}
 
+	Vector3::Vector3(const Vector3& a_rhs)
+		:x(a_rhs.x), y(a_rhs.y), z(a_rhs.z)
+	{}
+
 	Vector3::Vector3(const float_t a_x,const float_t a_y,const float_t a_z)
 		:x(a_x), y(a_y), z(a_z), padding(0)
 	{}
@@ -14,7 +18,7 @@ namespace RocketFrog
 		:x(a_all), y(a_all), z(a_all), padding(0)
 	{}
 
-	inline Vector3& Vector3::operator=(const Vector3& a_rhs)
+	Vector3& Vector3::operator=(const Vector3& a_rhs)
 	{
 		x = a_rhs.x;
 		y = a_rhs.y;
@@ -26,37 +30,37 @@ namespace RocketFrog
 	Vector3::~Vector3()
 	{}
 
-	inline bool Vector3::operator==(const Vector3& a_rhs) const
+	bool Vector3::operator==(const Vector3& a_rhs) const
 	{
 		return (x==a_rhs.x && y==a_rhs.y && z==a_rhs.z);
 	}
 
-	inline bool Vector3::operator!=(const Vector3& a_rhs) const
+	bool Vector3::operator!=(const Vector3& a_rhs) const
 	{
 		return !operator==(a_rhs);
 	}
 
-	inline bool Vector3::operator>(const Vector3& a_rhs) const
+	bool Vector3::operator>(const Vector3& a_rhs) const
 	{
 		return (x>a_rhs.x && y>a_rhs.y && z>a_rhs.z);
 	}
 
-	inline bool Vector3::operator>=(const Vector3& a_rhs) const
+	bool Vector3::operator>=(const Vector3& a_rhs) const
 	{
 		return (x>=a_rhs.x && y>=a_rhs.y && z>=a_rhs.z);
 	}
 
-	inline bool Vector3::operator<(const Vector3& a_rhs) const
+	bool Vector3::operator<(const Vector3& a_rhs) const
 	{
 		return (x<a_rhs.x && y<a_rhs.y && z<a_rhs.z);
 	}
 
-	inline bool Vector3::operator<=(const Vector3& a_rhs) const
+	bool Vector3::operator<=(const Vector3& a_rhs) const
 	{
 		return (x<=a_rhs.x && y<=a_rhs.y && z<=a_rhs.z);
 	}
 
-	inline void Vector3::Invert()
+	void Vector3::Invert()
 	{
 		/// Flips all the values
 		x = -x;
@@ -64,48 +68,48 @@ namespace RocketFrog
 		z = -z;
 	}
 
-	inline Vector3 Vector3::operator+(const Vector3& a_rhs) const
+	Vector3 Vector3::operator+(const Vector3& a_rhs) const
 	{
 		return Vector3(x+a_rhs.x, y+a_rhs.y, z+a_rhs.z);
 	}
 
-	inline void Vector3::operator+=(const Vector3& a_rhs)
+	void Vector3::operator+=(const Vector3& a_rhs)
 	{
 		x += a_rhs.x;
 		y += a_rhs.y;
 		z += a_rhs.z;
 	}
 
-	inline Vector3 Vector3::operator-(const Vector3& a_rhs) const
+	Vector3 Vector3::operator-(const Vector3& a_rhs) const
 	{
 		return Vector3(x-a_rhs.x, y-a_rhs.y, z-a_rhs.z);
 	}
 
-	inline void Vector3::operator-=(const Vector3& a_rhs)
+	void Vector3::operator-=(const Vector3& a_rhs)
 	{
 		x -= a_rhs.x;
 		y -= a_rhs.y;
 		z -= a_rhs.z;
 	}
 
-	inline Vector3 Vector3::operator*(const float_t a_scalar) const
+	Vector3 Vector3::operator*(const float_t a_scalar) const
 	{
 		return Vector3(x*a_scalar, y*a_scalar, z*a_scalar);
 	}
 
-	inline Vector3 Vector3::operator*(const Vector3& a_rhs) const
+	Vector3 Vector3::operator*(const Vector3& a_rhs) const
 	{
 		return Vector3(x*a_rhs.x, y*a_rhs.y, z*a_rhs.z);
 	}
 
-	inline void Vector3::operator*=(const float_t a_scalar)
+	void Vector3::operator*=(const float_t a_scalar)
 	{
 		x *= a_scalar;
 		y *= a_scalar;
 		z *= a_scalar;
 	}
 
-	inline void Vector3::operator*=(const Vector3& a_rhs)
+	void Vector3::operator*=(const Vector3& a_rhs)
 	{
 		x *= a_rhs.x;
 		y *= a_rhs.y;
@@ -139,12 +143,12 @@ namespace RocketFrog
 		}
 	}
 
-	inline float_t Vector3::DotProduct(const Vector3& a_rhs) const
+	float_t Vector3::DotProduct(const Vector3& a_rhs) const
 	{
 		return (x*a_rhs.x + y*a_rhs.y + z*a_rhs.z);
 	}
 
-	inline Vector3 Vector3::CrossProduct(const Vector3& a_rhs) const
+	Vector3 Vector3::CrossProduct(const Vector3& a_rhs) const
 	{
 		Vector3 _product;
 		_product.x = y*a_rhs.z - z*a_rhs.y;
@@ -154,12 +158,12 @@ namespace RocketFrog
 		return _product;
 	}
 
-	inline void Vector3::CrossProductUpdate(const Vector3& a_rhs)
+	void Vector3::CrossProductUpdate(const Vector3& a_rhs)
 	{
 		*this = CrossProduct(a_rhs);
 	}
 
-	inline void Vector3::Clear()
+	void Vector3::Clear()
 	{
 		x = y = z = 0;
 	}

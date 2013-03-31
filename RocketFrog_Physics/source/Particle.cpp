@@ -22,63 +22,63 @@ namespace RocketFrog
 	Particle::~Particle()
 	{}
 
-	inline Vector3 Particle::GetPosition() const
+	Vector3 Particle::GetPosition() const
 	{
 		return m_position;
 	}
 
-	inline void Particle::SetPosition(const Vector3& a_pos)
+	void Particle::SetPosition(const Vector3& a_pos)
 	{
 		m_position = a_pos;
 	}
 
-	inline Vector3 Particle::GetVelocity() const
+	Vector3 Particle::GetVelocity() const
 	{
 		return m_velocity;
 	}
 
-	inline void Particle::SetVelocity(const Vector3& a_vel)
+	void Particle::SetVelocity(const Vector3& a_vel)
 	{
 		m_velocity = a_vel;
 	}
 
-	inline Vector3 Particle::GetAcceleration() const
+	Vector3 Particle::GetAcceleration() const
 	{
 		return m_acceleration;
 	}
 
-	inline void Particle::SetAcceleration(const Vector3& a_acc)
+	void Particle::SetAcceleration(const Vector3& a_acc)
 	{
 		m_acceleration = a_acc;
 	}
 
-	inline float_t Particle::GetDamping() const
+	float_t Particle::GetDamping() const
 	{
 		return m_damping;
 	}
 
-	inline void Particle::SetDamping(float_t a_damping)
+	void Particle::SetDamping(float_t a_damping)
 	{
 		m_damping = a_damping;
 	}
 
-	inline float_t Particle::GetMass() const
+	float_t Particle::GetMass() const
 	{
 		return (float_t(1.0) / m_inverseMass);
 	}
 
-	inline float_t Particle::GetInverseMass() const
+	float_t Particle::GetInverseMass() const
 	{
 		return m_inverseMass;
 	}
 
-	inline void Particle::SetMass(float a_mass)
+	void Particle::SetMass(float a_mass)
 	{
 		assert(a_mass != 0);
 		m_inverseMass = (float_t(1.0) / a_mass);
 	}
 
-	inline void Particle::SetInverseMass(float a_inverseMass)
+	void Particle::SetInverseMass(float a_inverseMass)
 	{
 		m_inverseMass = a_inverseMass;
 	}
@@ -103,5 +103,10 @@ namespace RocketFrog
 
 		/// impose drag.
 		m_velocity *= num_pow(m_damping, a_DeltaTime);
+	}
+
+	void Particle::ClearForces()
+	{
+		m_totalForces.Clear();
 	}
 }

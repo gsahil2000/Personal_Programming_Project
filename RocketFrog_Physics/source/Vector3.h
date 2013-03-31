@@ -1,5 +1,5 @@
 #pragma once
-#include "Common.h"
+#include "Precision.h"
 
 /// @file Vector.h
 /// Declaration of Vector3 class.

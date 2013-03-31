@@ -8,6 +8,8 @@ static double qpcFrequency;
 
 namespace RocketFrog
 {
+	Timer* RocketFrog::Timer::m_instance = nullptr;
+
 	Timer::Timer()
 	{}
 
@@ -52,7 +54,7 @@ namespace RocketFrog
 	{
 		LONGLONG _time;
 
-		qpcFlag = ( QueryPerformanceCounter((LARGE_INTEGER*)&_time) > 0 );
+		qpcFlag = ( QueryPerformanceFrequency((LARGE_INTEGER*)&_time) > 0 );
 
 		if (qpcFlag)
 		{
@@ -74,7 +76,7 @@ namespace RocketFrog
 		m_instance->m_lastFrameTimeStamp = systemTime();
 		m_instance->m_lastFrameDuration = 0;
 
-		m_instance->m_lastFrameClockStamp = systemTime();
+		m_instance->m_lastFrameClockStamp = systemClock();
 		m_instance->m_lastFrameClockTicks = 0;
 
 		m_instance->m_isPaused = false;
@@ -99,9 +101,15 @@ namespace RocketFrog
 			m_instance->m_frameNumber++;
 		}
 
+		/// update the timing information
 		unsigned long _currentTime = systemTime();
-		m_instance->m_lastFrameClockTicks = _currentTime - m_instance->m_lastFrameClockStamp;
-		m_instance->m_lastFrameClockStamp = _currentTime;
+		m_instance->m_lastFrameDuration = _currentTime - m_instance->m_lastFrameTimeStamp;
+		m_instance->m_lastFrameTimeStamp = _currentTime;
+
+		/// update the tick information
+		unsigned long _currentClock = systemClock();
+		m_instance->m_lastFrameClockTicks = _currentClock - m_instance->m_lastFrameClockStamp;
+		m_instance->m_lastFrameClockStamp = _currentClock;
 
 		if (m_instance->m_frameNumber > 1)
 		{

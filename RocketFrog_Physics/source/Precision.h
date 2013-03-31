@@ -1,6 +1,5 @@
 /// Jai Mata Di
 #pragma once
-
 #include <math.h>
 
 namespace RocketFrog

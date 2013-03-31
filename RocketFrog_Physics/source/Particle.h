@@ -47,6 +47,9 @@ namespace RocketFrog
 		/// called every frame to update the particle physics state.
 		void Integrate(float_t a_DeltaTime);
 
+		/// clears the forces acting on this particle.
+		void ClearForces();
+
 	protected:
 		/// holds the position of the particle in world space.
 		Vector3 m_position;
@@ -62,5 +65,8 @@ namespace RocketFrog
 
 		/// holds inverse mass of the particle
 		float_t m_inverseMass;
+
+		/// this vector accumulates all the forces acting upon this particle.
+		Vector3 m_totalForces;
 	};
 }
