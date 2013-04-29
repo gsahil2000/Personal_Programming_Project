@@ -17,7 +17,7 @@ namespace RocketFrog
 
 		/// Ctor to set all the values.
 		Particle(const Vector3& a_pos, const Vector3& a_vel, const Vector3& a_acc,
-			float_t a_damp, float_t a_mass);
+			number a_damp, number a_mass);
 
 		/// Dtor.
 		~Particle();
@@ -35,17 +35,23 @@ namespace RocketFrog
 		void	SetAcceleration(const Vector3& a_acc);
 
 		/// damping accessors
-		float_t GetDamping() const;
-		void	SetDamping(const float_t a_damping);
+		number GetDamping() const;
+		void	SetDamping(const number a_damping);
 
 		/// Mass accessors
-		float_t GetMass() const;
+		number  GetMass() const;
 		float	GetInverseMass() const;
-		void	SetMass(const float_t a_mass);
-		void	SetInverseMass(const float_t a_inverseMass);
+		void	SetMass(const number a_mass);
+		void	SetInverseMass(const number a_inverseMass);
+
+		/// returns if this particle has finite mass.
+		bool	HasFiniteMass() const;
 
 		/// called every frame to update the particle physics state.
-		void Integrate(float_t a_DeltaTime);
+		void Integrate(number a_DeltaTime);
+
+		/// adds forces to apply to particle at once.
+		void AddForce(const Vector3& a_vForce);
 
 		/// clears the forces acting on this particle.
 		void ClearForces();
@@ -61,10 +67,10 @@ namespace RocketFrog
 		Vector3 m_acceleration;
 
 		/// holds the value to reduce the velocity over time.
-		float_t m_damping;
+		number m_damping;
 
 		/// holds inverse mass of the particle
-		float_t m_inverseMass;
+		number m_inverseMass;
 
 		/// this vector accumulates all the forces acting upon this particle.
 		Vector3 m_totalForces;

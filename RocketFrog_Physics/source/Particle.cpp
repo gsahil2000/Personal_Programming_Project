@@ -9,7 +9,7 @@ namespace RocketFrog
 	{}
 
 	Particle::Particle(const Vector3& a_pos, const Vector3& a_vel, const Vector3& a_acc,
-			float_t a_damp, float_t a_mass)
+			number a_damp, number a_mass)
 			:m_position(a_pos),
 			m_velocity(a_vel),
 			m_acceleration(a_acc),
@@ -52,22 +52,29 @@ namespace RocketFrog
 		m_acceleration = a_acc;
 	}
 
-	float_t Particle::GetDamping() const
+	number Particle::GetDamping() const
 	{
 		return m_damping;
 	}
 
-	void Particle::SetDamping(float_t a_damping)
+	void Particle::SetDamping(number a_damping)
 	{
 		m_damping = a_damping;
 	}
 
-	float_t Particle::GetMass() const
+	number Particle::GetMass() const
 	{
-		return (float_t(1.0) / m_inverseMass);
+		if (m_inverseMass == 0)
+		{
+			return num_max;
+		}
+		else
+		{
+			return (number(1.0) / m_inverseMass);
+		}
 	}
 
-	float_t Particle::GetInverseMass() const
+	number Particle::GetInverseMass() const
 	{
 		return m_inverseMass;
 	}
@@ -75,7 +82,7 @@ namespace RocketFrog
 	void Particle::SetMass(float a_mass)
 	{
 		assert(a_mass != 0);
-		m_inverseMass = (float_t(1.0) / a_mass);
+		m_inverseMass = (number(1.0) / a_mass);
 	}
 
 	void Particle::SetInverseMass(float a_inverseMass)
@@ -83,7 +90,12 @@ namespace RocketFrog
 		m_inverseMass = a_inverseMass;
 	}
 
-	void Particle::Integrate(float_t a_DeltaTime)
+	bool Particle::HasFiniteMass() const
+	{
+		return m_inverseMass >= 0.0f;
+	}
+
+	void Particle::Integrate(number a_DeltaTime)
 	{
 		/// don't integrate if particle has infinite mass
 		if (m_inverseMass <= 0)
@@ -97,12 +109,19 @@ namespace RocketFrog
 
 		/// calculate acceleration from force
 		Vector3 _result = m_acceleration;
+		_result.AddScaledVector(m_totalForces, m_inverseMass);
+
 
 		/// update the velocity of particle
 		m_velocity.AddScaledVector(_result, a_DeltaTime);
 
 		/// impose drag.
 		m_velocity *= num_pow(m_damping, a_DeltaTime);
+	}
+
+	void Particle::AddForce(const Vector3& a_vForce)
+	{
+		m_totalForces += a_vForce;
 	}
 
 	void Particle::ClearForces()
