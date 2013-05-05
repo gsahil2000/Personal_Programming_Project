@@ -15,10 +15,10 @@ namespace RocketFrog
 		Vector3();
 
 		/// Ctor - assign given values to members.
-		Vector3(const float_t a_x,const float_t a_y,const float_t a_z);
+		Vector3(const number a_x,const number a_y,const number a_z);
 
 		/// Ctor - assign the scalar value to all three members.
-		Vector3(const float_t a_all);
+		Vector3(const number a_all);
 
 		/// Copy Ctor.
 		Vector3(const Vector3& a_rhs);
@@ -63,31 +63,31 @@ namespace RocketFrog
 		void operator-=(const Vector3& a_rhs);
 
 		/// operator*
-		Vector3 operator*(const float_t a_scalar) const;
+		Vector3 operator*(const number a_scalar) const;
 
 		/// component product
 		Vector3 operator*(const Vector3& a_rhs) const;
 
 		/// operator*= with scalar
-		void operator*=(const float_t a_scalar);
+		void operator*=(const number a_scalar);
 
 		/// operator*= with vector
 		void operator*=(const Vector3& a_rhs);
 
 		/// Multiplies the vector with given scalar value and add to self
-		void AddScaledVector(const Vector3& a_vector, const float_t a_scale);
+		void AddScaledVector(const Vector3& a_vector, const number a_scale);
 
 		/// Returns Magnitude of the vector
-		float_t Magnitude() const;
+		number Magnitude() const;
 
 		/// returns the squared magnitude of the vector(more efficient).
-		float_t SquaredMagnitude() const;
+		number SquaredMagnitude() const;
 
 		/// turns a non-zero vector into unit vector
 		void Normalize();
 
 		/// returns the dot product(scalar product) of this vector with given vector
-		float_t DotProduct(const Vector3& a_rhs) const;
+		number DotProduct(const Vector3& a_rhs) const;
 
 		/// returns the cross product(vector product) of this vector with give vector
 		Vector3 CrossProduct(const Vector3& a_rhs) const;
@@ -99,9 +99,9 @@ namespace RocketFrog
 		void Clear();
 
 		/// members to hold value of 3 dimensions. Public to give quick access to users.
-		float_t x, y, z;
+		number x, y, z;
 		
 	private:
-		float_t padding;
+		number padding;
 	};
 }

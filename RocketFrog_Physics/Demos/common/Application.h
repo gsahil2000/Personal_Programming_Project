@@ -10,9 +10,9 @@ namespace RocketFrog
 	class Application
 	{
 	public:
-		Application();									///< Default Ctor.
-		Application(const int height, const int width); ///< ctor to set window size.
-		virtual ~Application()=0;						///< Dtor.
+		Application();										///< Default Ctor.
+		Application(const int height, const int width);		///< ctor to set window size.
+		virtual ~Application()=0;							///< Dtor.
 
 		void Resize(const int width,const int height);		///< called by OpenGL when the window size is changed.
 		virtual void Key(const unsigned char a_key);		///< called on Key press with ASCII code of the key.
