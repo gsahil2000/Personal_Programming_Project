@@ -132,4 +132,70 @@ namespace RocketFrog
 
 		glEnable(GL_DEPTH_TEST);
 	}
+
+#pragma region MassAggregateApplication
+	MassAggregateApplication::MassAggregateApplication(const unsigned int a_nParticleCount)
+		:m_world(a_nParticleCount*10), m_particleArray(new Particle[a_nParticleCount]), m_groundContactGenerator()
+	{
+		for (unsigned int i = 0; i < a_nParticleCount; ++i)
+		{
+			m_world.GetParticleList()->push_back(&m_particleArray[i]);
+		}
+
+		m_groundContactGenerator.Init(m_world.GetParticleList());
+		m_world.GetContactGeneratorList()->push_back(&m_groundContactGenerator);
+	}
+
+	MassAggregateApplication::~MassAggregateApplication()
+	{
+		delete[] m_particleArray;
+	}
+
+	void MassAggregateApplication::InitGraphics()
+	{
+		// call the base class function.
+		Application::InitGraphics();
+	}
+
+	void MassAggregateApplication::Display()
+	{
+		// clear viewport and set the camera direction;
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glLoadIdentity();
+		gluLookAt(0.0, 3.5, 8.0,  0.0, 3.5, 0.0,  0.0, 1.0, 0.0);
+
+		glColor3f(0, 0, 0);
+
+		ParticleWorld::ParticleList* _particleList = m_world.GetParticleList();
+		ParticleWorld::ParticleList::iterator _it  = _particleList->begin();
+
+		for (; _it != _particleList->end(); ++_it)
+		{
+			Particle* _particle = *_it;
+			Vector3&  _pos      = _particle->GetPosition();
+			glPushMatrix();
+			glTranslatef(_pos.x, _pos.y, _pos.z);
+			glutSolidSphere(0.1f, 20, 10);
+			glPopMatrix();
+		}
+	}
+
+	void MassAggregateApplication::Update()
+	{
+		// Clear Accumators.
+		m_world.StartFrame();
+
+		// Find the duration of the last frame in seconds.
+		float _duration = (float)Timer::GetInstance()->m_lastFrameDuration * 0.001f;
+		if (_duration <= 0.0f)
+		{
+			return;
+		}
+		
+		// Run the Simulation.
+		m_world.RunPhysics(_duration);
+
+		Application::Update();
+	}
+#pragma endregion //MassAggregateApplication
 }

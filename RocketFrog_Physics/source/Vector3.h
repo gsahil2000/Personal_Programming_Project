@@ -29,6 +29,12 @@ namespace RocketFrog
 		/// Dtor.
 		~Vector3();
 
+		/// get value as array operator[].
+		number operator[](const unsigned int i) const;
+
+		/// access as array operator[].
+		number& operator[](const unsigned int i);
+
 		/// check for equality
 		bool operator==(const Vector3& a_rhs) const;
 
@@ -100,6 +106,15 @@ namespace RocketFrog
 
 		/// members to hold value of 3 dimensions. Public to give quick access to users.
 		number x, y, z;
+
+		/// global static const member for use.
+		const static Vector3 GRAVITY;
+		const static Vector3 UP;
+		const static Vector3 RIGHT;
+		const static Vector3 OUT_OF_SCREEN;
+		const static Vector3 X;
+		const static Vector3 Y;
+		const static Vector3 Z;
 		
 	private:
 		number padding;

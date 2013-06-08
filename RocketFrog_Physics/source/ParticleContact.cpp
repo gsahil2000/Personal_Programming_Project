@@ -55,7 +55,7 @@ namespace RocketFrog
 		Vector3 _relativeVel = m_pParticles[0]->GetVelocity();
 		if (m_pParticles[1] != nullptr)
 		{
-			_relativeVel = m_pParticles[1]->GetVelocity();
+			_relativeVel -= m_pParticles[1]->GetVelocity();
 		}
 		return _relativeVel.DotProduct(m_vContactNormal);
 	}
@@ -137,7 +137,9 @@ namespace RocketFrog
 
 			/// make sure we've not removed more than required.
 			if (_newSepVel < 0)
+			{
 				_newSepVel = 0;
+			}
 		}
 		/// *** Resting object part end. **********************
 
@@ -167,7 +169,7 @@ namespace RocketFrog
 		if (m_pParticles[1] != nullptr)
 		{
 			m_pParticles[1]->SetVelocity(m_pParticles[1]->GetVelocity() +
-				_impulsePerInvMass * m_pParticles[1]->GetInverseMass());
+				_impulsePerInvMass * -m_pParticles[1]->GetInverseMass());
 		}
 	}
 
@@ -197,7 +199,7 @@ namespace RocketFrog
 
 		if (m_pParticles[1])
 		{
-			m_vParticleMovement[1] = _movePerInvMass * m_pParticles[1]->GetInverseMass();
+			m_vParticleMovement[1] = _movePerInvMass * -m_pParticles[1]->GetInverseMass();
 			m_pParticles[1]->SetPosition(m_pParticles[1]->GetPosition() + m_vParticleMovement[1]);
 		}
 		else

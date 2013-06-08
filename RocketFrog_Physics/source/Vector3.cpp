@@ -1,7 +1,20 @@
 #include "Vector3.h"
+#include <exception>
+
+// Disable warning message 4100(unreferenced Param), 4305(converting float to number).
+#pragma warning( push )
+#pragma warning( disable : 4100 4305 )
 
 namespace RocketFrog
 {
+	const Vector3 Vector3::GRAVITY		 = Vector3(0, -9.81, 0);
+	const Vector3 Vector3::RIGHT		 = Vector3(1, 0, 0);
+	const Vector3 Vector3::UP			 = Vector3(0, 1, 0);
+	const Vector3 Vector3::OUT_OF_SCREEN = Vector3(0, 0, 1);
+	const Vector3 Vector3::X		     = Vector3(1, 0, 0);
+	const Vector3 Vector3::Y			 = Vector3(0, 1, 0);
+	const Vector3 Vector3::Z             = Vector3(0, 0, 1);
+
 	Vector3::Vector3()
 		:x(0), y(0), z(0), padding(0)
 	{}
@@ -29,6 +42,42 @@ namespace RocketFrog
 
 	Vector3::~Vector3()
 	{}
+
+	number Vector3::operator[](const unsigned int i) const
+	{
+		switch(i)
+		{
+		case 0:
+			return x;
+
+		case 1:
+			return y;
+
+		case 2:
+			return z;
+
+		default:
+			throw std::exception("Index out of bound.");
+		}
+	}
+
+	number& Vector3::operator[](const unsigned int i)
+	{
+		switch (i)
+		{
+		case 0:
+			return x;
+
+		case 1:
+			return y;
+
+		case 2:
+			return z;
+
+		default:
+			throw std::exception("Index out of bound.");
+		}
+	}
 
 	bool Vector3::operator==(const Vector3& a_rhs) const
 	{
@@ -168,3 +217,5 @@ namespace RocketFrog
 		x = y = z = 0;
 	}
 }
+
+#pragma warning (pop)

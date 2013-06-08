@@ -40,10 +40,38 @@ namespace RocketFrog
 
 			/// check if there is anything to be resolved?
 			if (_maxIndex == a_nContactCount)
+			{
 				break;
+			}
 
 			/// resolve this contact.
 			a_pContacts[_maxIndex].Resolve(a_nDeltaTime);
+
+			/// update interpenetration for all particles.
+			Vector3* _move = a_pContacts[_maxIndex].m_vParticleMovement;
+			for (unsigned int i = 0; i < a_nContactCount; ++i)
+			{
+				if (a_pContacts[i].GetParticle(0) == a_pContacts[_maxIndex].m_pParticles[0])
+				{
+					a_pContacts[i].SetContactPenetration(a_pContacts[i].GetContactPenetration() - _move[0].DotProduct(a_pContacts[i].GetContactNormal()));
+				}
+				else if (a_pContacts[i].GetParticle(0) == a_pContacts[_maxIndex].GetParticle(1))
+				{
+					a_pContacts[i].SetContactPenetration(a_pContacts[i].GetContactPenetration() - _move[1].DotProduct(a_pContacts[i].GetContactNormal()));
+				}
+
+				if (a_pContacts[i].GetParticle(1) != nullptr)
+				{
+					if (a_pContacts[i].GetParticle(1) == a_pContacts[_maxIndex].GetParticle(0))
+					{
+						a_pContacts[i].SetContactPenetration(a_pContacts[i].GetContactPenetration() + _move[0].DotProduct(a_pContacts[i].GetContactNormal()));
+					}
+					else if (a_pContacts[i].GetParticle(1) == a_pContacts[_maxIndex].GetParticle(1))
+					{
+						a_pContacts[i].SetContactPenetration(a_pContacts[i].GetContactPenetration() + _move[1].DotProduct(a_pContacts[i].GetContactNormal()));
+					}
+				}
+			}
 
 			/// update iterationsUsed.
 			++m_nIterationsUsed;

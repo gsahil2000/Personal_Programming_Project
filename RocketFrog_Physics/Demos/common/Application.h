@@ -1,7 +1,8 @@
 #pragma once
+#include <ForwardDeclaration.h>
 
 /// @file Application.h
-/// Declaration of Application class.
+/// Declaration of Application classes.
 
 namespace RocketFrog
 {
@@ -42,5 +43,23 @@ namespace RocketFrog
 
 		int m_lastMouseX;	///< holds last mouse position X.
 		int m_lastMouseY;	///< holds last mouse position Y.
+	};
+
+	/// @class MassAggregateApplication
+	/// This application addds additional functionality used in the mass-aggregate demo.
+	class MassAggregateApplication : public Application
+	{
+	protected:
+		ParticleWorld					m_world;
+		Particle*						m_particleArray;
+		ParticleGroundContactGenerator	m_groundContactGenerator;
+
+	public:
+		MassAggregateApplication(const unsigned int a_nParticleCount);
+		virtual ~MassAggregateApplication();
+
+		virtual void Update();			/// update the particle position.
+		virtual void InitGraphics();	/// Sets up the graphic rendering.
+		virtual void Display();			/// Display the particles.
 	};
 }
