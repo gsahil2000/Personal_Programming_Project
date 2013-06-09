@@ -13,6 +13,7 @@ namespace RocketFrog
 	RopeBridgeDemo::RopeBridgeDemo()
 		:MassAggregateApplication(12), 
 		m_pSupports(nullptr), m_pCables(nullptr), m_pRods(nullptr),
+		m_bIsActive(true), m_bIsLeftPressed(false), m_bIsRightPressed(false), m_bIsUpPressed(false), m_bIsDownPressed(false),
 		m_vMassPos(0.0f, 0.0f, 0.5f)
 	{
 		// generate masses and connections.
@@ -96,7 +97,7 @@ namespace RocketFrog
 
 		// find coordinates of mass as Index and proportion.
 		int _x     = int(m_vMassPos.x);
-		number _xp = fmod(m_vMassPos.z, number(1.0f));
+		number _xp = fmod(m_vMassPos.x, number(1.0f));
 		if (_x < 0)
 		{
 			_x  = 0;
@@ -192,7 +193,9 @@ namespace RocketFrog
 	void RopeBridgeDemo::Update()
 	{
 		MassAggregateApplication::Update();
-		UpdateAdditionalMass();
+		UpdatePosition();
+		if (m_bIsActive)
+			UpdateAdditionalMass();
 	}
 
 	const char* RopeBridgeDemo::GetTitle()
@@ -200,44 +203,100 @@ namespace RocketFrog
 		return "RocketFrogPhysics: RopeBridgeDemo 7/6/2013";
 	}
 
-	void RopeBridgeDemo::Key(const unsigned char a_cKey)
+	void RopeBridgeDemo::KeyPress(const unsigned char a_cKey)
 	{
 		switch (a_cKey)
 		{
 		case 'w': case 'W':
+			m_bIsUpPressed = true;
+			break;
+
+		case 's': case 'S':
+			m_bIsDownPressed = true;
+			break;
+
+		case 'a': case 'A':
+			m_bIsLeftPressed = true;
+			break;
+
+		case 'd': case 'D':
+			m_bIsRightPressed = true;
+			break;
+
+		case ' ':
+			m_bIsActive = false;
+			break;
+
+		default:
+			MassAggregateApplication::KeyPress(a_cKey);
+		}
+	}
+
+	void RopeBridgeDemo::KeyUp(const unsigned char a_cKey)
+	{
+		switch (a_cKey)
+		{
+		case 'w': case 'W':
+			m_bIsUpPressed = false;
+			break;
+
+		case 's': case 'S':
+			m_bIsDownPressed = false;
+			break;
+
+		case 'a': case 'A':
+			m_bIsLeftPressed = false;
+			break;
+
+		case 'd': case 'D':
+			m_bIsRightPressed = false;
+			break;
+
+		case ' ':
+			m_bIsActive = true;
+			break;
+
+		default:
+			MassAggregateApplication::KeyPress(a_cKey);
+		}
+	}
+
+	void RopeBridgeDemo::UpdatePosition()
+	{
+		if (m_bIsUpPressed)
+		{
 			m_vMassPos.z -= 0.1f;
 			if (m_vMassPos.z < 0.0f)
 			{
 				m_vMassPos.z = 0.0f;
 			}
-			break;
+		}
 
-		case 's': case 'S':
+		if (m_bIsDownPressed)
+		{
 			m_vMassPos.z += 0.1f;
 			if (m_vMassPos.z > 1.0f)
 			{
 				m_vMassPos.z = 1.0f;
 			}
-			break;
+		}
 
-		case 'a': case 'A':
+		if (m_bIsLeftPressed)
+		{
 			m_vMassPos.x -= 0.1f;
 			if (m_vMassPos.x < 0.0f)
 			{
 				m_vMassPos.x = 0.0f;
 			}
-			break;
+		}
 
-		case 'd': case 'D':
+		if (m_bIsRightPressed)
+		{
 			m_vMassPos.x += 0.1f;
 			if (m_vMassPos.x > 5.0f)
 			{
 				m_vMassPos.x = 5.0f;
 			}
-			break;
-
-		default:
-			MassAggregateApplication::Key(a_cKey);
 		}
 	}
 }

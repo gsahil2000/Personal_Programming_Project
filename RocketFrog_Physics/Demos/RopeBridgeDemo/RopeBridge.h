@@ -26,10 +26,12 @@ namespace RocketFrog
 		virtual const char* GetTitle();
 		virtual void        Display();
 		virtual void        Update();
-		virtual void        Key(const unsigned char a_cKey);
+		virtual void        KeyPress(const unsigned char a_cKey);
+		virtual void        KeyUp(const unsigned char a_cKey);
 
 	private:
 		void UpdateAdditionalMass();
+		void UpdatePosition();
 
 		ParticleCableConstaint* m_pSupports;
 		ParticleCable*          m_pCables;
@@ -37,5 +39,12 @@ namespace RocketFrog
 
 		Vector3                 m_vMassPos;
 		Vector3                 m_vMassDisplayPos;
+
+		bool m_bIsUpPressed;
+		bool m_bIsDownPressed;
+		bool m_bIsLeftPressed;
+		bool m_bIsRightPressed;
+
+		bool m_bIsActive;
 	};
 }

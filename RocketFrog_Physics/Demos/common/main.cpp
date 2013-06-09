@@ -15,13 +15,13 @@ void createWindow()
 	g_app->m_windowID = glutCreateWindow(g_app->GetTitle());
 }
 
-void update()
+void Update()
 {
 	Timer::GetInstance()->Update();
 	g_app->Update();
 }
 
-void display()
+void Display()
 {
 	g_app->Display();
 
@@ -29,22 +29,27 @@ void display()
 	glutSwapBuffers();
 }
 
-void mouse(int button, int state, int x, int y)
+void Mouse(int button, int state, int x, int y)
 {
 	g_app->Mouse(button, state, x, y);
 }
 
-void reshape(int width, int height)
+void Reshape(int width, int height)
 {
 	g_app->Resize(width, height);
 }
 
-void keyboard(unsigned char key, int x, int y)
+void KeyPress(unsigned char key, int x, int y)
 {
-	g_app->Key(key);
+	g_app->KeyPress(key);
 }
 
-void motion(int x, int y)
+void KeyRelease(unsigned char a_cKey, int a_x, int a_y)
+{
+	g_app->KeyUp(a_cKey);
+}
+
+void Motion(int x, int y)
 {
 	g_app->MouseDrag(x, y);
 }
@@ -58,12 +63,13 @@ void main(int argc, char** argv)
 	createWindow();
 
 	/// register callback functions.
-	glutReshapeFunc(reshape);
-	glutKeyboardFunc(keyboard);
-	glutDisplayFunc(display);
-	glutIdleFunc(update);
-	glutMouseFunc(mouse);
-	glutMotionFunc(motion);
+	glutReshapeFunc(Reshape);
+	glutKeyboardFunc(KeyPress);
+	glutKeyboardUpFunc(KeyRelease);
+	glutDisplayFunc(Display);
+	glutIdleFunc(Update);
+	glutMouseFunc(Mouse);
+	glutMotionFunc(Motion);
 
 	// run the application
 	g_app->InitGraphics();

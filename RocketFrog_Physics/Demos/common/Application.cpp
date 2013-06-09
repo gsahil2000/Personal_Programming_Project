@@ -4,6 +4,9 @@
 #include "Application.h"
 #include "Timer.h"
 
+#pragma warning (push)
+#pragma warning ( disable: 4100 4239)
+
 namespace RocketFrog
 {
 	Application::Application()
@@ -77,7 +80,10 @@ namespace RocketFrog
 		SetView();
 	}
 
-	void Application::Key(const unsigned char a_key)
+	void Application::KeyPress(const unsigned char a_cKey)
+	{}
+
+	void Application::KeyUp(const unsigned char a_cKey)
 	{}
 
 	void Application::Mouse(const int a_key, const int a_state, const int x, const int y)
@@ -199,3 +205,4 @@ namespace RocketFrog
 	}
 #pragma endregion //MassAggregateApplication
 }
+#pragma warning (pop)
