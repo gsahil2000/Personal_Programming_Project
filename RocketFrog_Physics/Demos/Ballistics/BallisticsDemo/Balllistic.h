@@ -19,7 +19,7 @@ namespace RocketFrog
 
 		virtual void Mouse(const int a_key, const int a_state, const int x, const int y);
 
-		virtual void Key(const unsigned char a_key);
+		virtual void KeyPress(const unsigned char a_key);
 	private:
 		enum ShotType
 		{

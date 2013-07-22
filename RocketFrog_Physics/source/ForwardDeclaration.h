@@ -8,3 +8,7 @@
 #include "ParticleWorld.h"
 #include "ParticleForceGenerator.h"
 #include "ParticleLinks.h"
+
+#include "Rigidbody.h"
+#include "World.h"
+#include "ForceGenerators.h"

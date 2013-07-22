@@ -191,7 +191,7 @@ namespace RocketFrog
 		}
 	}
 
-	void BallisticDemo::Key(const unsigned char a_key)
+	void BallisticDemo::KeyPress(const unsigned char a_key)
 	{
 		switch (a_key)
 		{

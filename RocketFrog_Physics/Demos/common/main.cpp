@@ -41,6 +41,10 @@ void Reshape(int width, int height)
 
 void KeyPress(unsigned char key, int x, int y)
 {
+	if (key == 27)
+	{
+		exit(EXIT_SUCCESS);
+	}
 	g_app->KeyPress(key);
 }
 
